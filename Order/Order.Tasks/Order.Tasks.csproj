@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+  <ItemGroup>
+    <PackageReference Include="Quartz" Version="3.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Order.Common\Order.Common.csproj" />
+    <ProjectReference Include="..\Order.IServices\Order.IServices.csproj" />
+    <ProjectReference Include="..\Order.Repository\Order.Repository.csproj" />
+  </ItemGroup>
+
+</Project>

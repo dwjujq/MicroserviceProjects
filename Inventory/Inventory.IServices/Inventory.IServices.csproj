@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Inventory.Common\Inventory.Common.csproj" />
+    <ProjectReference Include="..\Inventory.Model\Inventory.Model.csproj" />
+    <ProjectReference Include="..\JCZY.CAP\JCZY.CAP.csproj" />
+  </ItemGroup>
+
+</Project>

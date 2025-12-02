@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+
+  <ItemGroup>
+    <None Update="Inventory.FrameWork.Entity\Inventory.FrameWork.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Inventory.FrameWork.cs</LastGenOutput>
+    </None>
+    <None Update="Inventory.FrameWork.IRepository\Inventory.FrameWork.IRepository.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Inventory.FrameWork.IRepository.cs</LastGenOutput>
+    </None>
+    <None Update="Inventory.FrameWork.IServices\Inventory.FrameWork.IServices.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Inventory.FrameWork.IServices.cs</LastGenOutput>
+    </None>
+    <None Update="Inventory.FrameWork.Repository\Inventory.FrameWork.Repository.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Inventory.FrameWork.Repository.cs</LastGenOutput>
+    </None>
+    <None Update="Inventory.FrameWork.Services\Inventory.FrameWork.Services.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Inventory.FrameWork.Services.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Inventory.FrameWork.IRepository\Inventory.FrameWork.IRepository.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Inventory.FrameWork.IRepository.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Inventory.FrameWork.IServices\Inventory.FrameWork.IServices.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Inventory.FrameWork.IServices.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Inventory.FrameWork.Repository\Inventory.FrameWork.Repository.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Inventory.FrameWork.Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Inventory.FrameWork.Services\Inventory.FrameWork.Services.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Inventory.FrameWork.Services.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

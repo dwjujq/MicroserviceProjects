@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+
+  <ItemGroup>
+    <None Update="Order.FrameWork.Entity\Order.FrameWork.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Order.FrameWork.cs</LastGenOutput>
+    </None>
+    <None Update="Order.FrameWork.IRepository\Order.FrameWork.IRepository.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Order.FrameWork.IRepository.cs</LastGenOutput>
+    </None>
+    <None Update="Order.FrameWork.IServices\Order.FrameWork.IServices.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Order.FrameWork.IServices.cs</LastGenOutput>
+    </None>
+    <None Update="Order.FrameWork.Repository\Order.FrameWork.Repository.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Order.FrameWork.Repository.cs</LastGenOutput>
+    </None>
+    <None Update="Order.FrameWork.Services\Order.FrameWork.Services.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Order.FrameWork.Services.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Order.FrameWork.IRepository\Order.FrameWork.IRepository.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Order.FrameWork.IRepository.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Order.FrameWork.IServices\Order.FrameWork.IServices.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Order.FrameWork.IServices.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Order.FrameWork.Repository\Order.FrameWork.Repository.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Order.FrameWork.Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Order.FrameWork.Services\Order.FrameWork.Services.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Order.FrameWork.Services.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>
