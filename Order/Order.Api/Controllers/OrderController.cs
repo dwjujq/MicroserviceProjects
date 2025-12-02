@@ -1,12 +1,4 @@
-﻿using Inventory.AuthHelper;
-using Inventory.AuthHelper.OverWrite;
-using Inventory.Common.Helper;
-using Inventory.Common.Swagger;
-using Inventory.IServices;
-using Inventory.Model;
-using Inventory.Model.ViewModels;
-using Inventory.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
@@ -20,12 +12,12 @@ namespace Inventory.Controllers
     /// </summary>
     [Route("api/Inventory")]
     [AllowAnonymous]
-    public class InventoryController : BaseApiController
+    public class OrderController : BaseApiController
     {
         readonly IInventoryServices _inventoryServices;
-        private readonly ILogger<InventoryController> _logger;
+        private readonly ILogger<OrderController> _logger;
 
-        public InventoryController(IInventoryServices inventoryServices, ILogger<InventoryController> logger)
+        public OrderController(IInventoryServices inventoryServices, ILogger<OrderController> logger)
         {
             _inventoryServices = inventoryServices;
             _logger = logger;
