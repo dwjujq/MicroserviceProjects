@@ -15,6 +15,7 @@
 	 
 
 	<ItemGroup>
+		<ProjectReference Include="..\JCZY.CAP\JCZY.CAP.csproj" />
 		<ProjectReference Include="..\Order.IServices\Order.IServices.csproj" />
 		<ProjectReference Include="..\Order.Repository\Order.Repository.csproj" />
 	</ItemGroup>

@@ -13,7 +13,12 @@ using Inventory.Extensions.Middlewares;
 using Inventory.Extensions.ServiceExtensions;
 using Inventory.Filter;
 using Inventory.Hubs;
+using Inventory.IServices;
+using Inventory.IServices.Consumers;
 using Inventory.Serilog.Utility;
+using Inventory.Services;
+using Inventory.Services.Consumers;
+using JCZY.CAP.Message;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -81,6 +86,8 @@ builder.Services.AddRedisInitMqSetup();
 builder.Services.AddIpPolicyRateLimitSetup(builder.Configuration);
 builder.Services.AddSignalR().AddNewtonsoftJsonProtocol();
 
+builder.Services.AddCapSetup();
+
 builder.Services.AddAuthorizationSetup();
 if (Permissions.IsUseIds4 || Permissions.IsUseAuthing)
 {
@@ -93,6 +100,10 @@ else
 }
 
 builder.Services.AddScoped<UseServiceDIAttribute>();
+
+builder.Services.AddScoped<IMessageTracker, RedisMessageTracker>();
+builder.Services.AddTransient<IInventoryConsumers, InventoryConsumers>();
+
 builder.Services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true)
     .Configure<IISServerOptions>(x => x.AllowSynchronousIO = true);
 
@@ -127,6 +138,9 @@ Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 // 3、配置中间件
 var app = builder.Build();
+
+////var s = app.Services.GetRequiredService<IInventoryServices>();
+
 IdentityModelEventSource.ShowPII = true;
 
 app.ConfigureApplication();

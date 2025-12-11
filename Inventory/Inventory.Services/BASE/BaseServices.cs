@@ -19,7 +19,19 @@ namespace Inventory.Services.BASE
         }
 
         //public IBaseRepository<TEntity> baseDal = new BaseRepository<TEntity>();
-        public IBaseRepository<TEntity> BaseDal { get; set; } //通过在子类的构造函数中注入，这里是基类，不用构造函数
+
+        private IBaseRepository<TEntity> _baseDal;
+        public IBaseRepository<TEntity> BaseDal 
+        {
+            get { return _baseDal; }
+            set 
+            {
+                if (_baseDal != value)
+                {
+                    _baseDal = value;
+                }
+            }
+        } //通过在子类的构造函数中注入，这里是基类，不用构造函数
 
         public ISqlSugarClient Db => BaseDal.Db;
 

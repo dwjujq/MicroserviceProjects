@@ -476,6 +476,26 @@
             
             </summary>
         </member>
+        <member name="T:Inventory.Model.Models.Inventory">
+            <summary>
+            库存
+            </summary>
+        </member>
+        <member name="P:Inventory.Model.Models.Inventory.IsDeleted">
+             <summary>
+            获取或设置是否禁用，逻辑上的删除，非物理删除
+             </summary>
+        </member>
+        <member name="P:Inventory.Model.Models.Inventory.ProductId">
+            <summary>
+            产品Id
+            </summary>
+        </member>
+        <member name="P:Inventory.Model.Models.Inventory.Stock">
+            <summary>
+            库存
+            </summary>
+        </member>
         <member name="T:Inventory.Model.Models.Modules">
             <summary>
             接口API地址信息表

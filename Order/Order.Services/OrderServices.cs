@@ -1,4 +1,6 @@
 ﻿using DotNetCore.CAP;
+using JCZY.CAP;
+using JCZY.CAP.Message;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Order.Common.Utility;
@@ -7,47 +9,55 @@ using Order.Model.CustomEnums;
 using Order.Model.ViewModels;
 using Order.Services.BASE;
 
-namespace Inventory.Services
+namespace Order.Services
 {
-    public partial class OrderServices : BaseServices<Order.Model.Models.Order>, IOrderServices
+    public class OrderServices : BaseServices<Model.Models.Order>, IOrderServices
     {
-        IHttpContextAccessor _httpContextAccessor;
         private readonly ICapPublisher _capPublisher;
         ILogger<OrderServices> _logger;
-        public OrderServices(ILogger<OrderServices> logger, IHttpContextAccessor httpContextAccessor,ICapPublisher capPublisher)
+        public OrderServices(ILogger<OrderServices> logger, ICapPublisher capPublisher)
         {
             _logger = logger;
-            _httpContextAccessor = httpContextAccessor;
             _capPublisher = capPublisher;
         }
 
         public async Task<OrderDto> CreatOrder(OrderDto orderDto)
         {
-            using (var trans = _dbContext.Database.BeginTransaction(_capPublisher, autoCommit: true))
+            using (var trans = Db.BeginCapTransaction(_capPublisher, autoCommit: false))
             {
-                var order = new Order.Model.Models.Order
+                try
                 {
-                    Id = IdGeneratorUtility.NextId(),
-                    ProductId = orderDto.ProductId,
-                    Quantity = orderDto.Quantity,
-                    CreatedDate = DateTime.Now,
-                    Status = OrderStatus.Created
-                };
-                _dbContext.Order.Add(order);
-                var flag = await _dbContext.SaveChangesAsync();
+                    var order = new Order.Model.Models.Order
+                    {
+                        Id = IdGeneratorUtility.NextId(),
+                        ProductId = orderDto.ProductId,
+                        Quantity = orderDto.Quantity,
+                        CreatedDate = DateTime.Now,
+                        Status = OrderStatus.Created
+                    };
+                    var id = await BaseDal.Add(order);
 
-                //throw new Exception("ewrrrrrr");
+                    if (id>0)
+                    {
+                        orderDto.Id = order.Id;
 
-                if (flag == 1)
-                {
-                    orderDto.Id = order.Id;
+                        var messageData = new MessageData<OrderDto>(orderDto);
+                        await _capPublisher.PublishAsync("order.created", messageData, "order.cancel");
 
-                    var messageData = new MessageData<OrderDto>(orderDto);
-                    await _capPublisher.PublishAsync("order.created", messageData, "order.cancel");
+                        //throw new Exception("ewrrrrrr");
 
-                    return orderDto;
+                        trans.Commit();
+
+                        return orderDto;
+                    }
+                    return null;
                 }
-                return null;
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex,ex.Message);
+                    trans.Rollback();
+                    return null;
+                }
             }
         }
     }

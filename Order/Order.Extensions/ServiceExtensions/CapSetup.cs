@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Order;
 
-namespace Blog.Core.Extensions.ServiceExtensions;
+namespace Order.Extensions.ServiceExtensions;
 
 public static class CapSetup
 {

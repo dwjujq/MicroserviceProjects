@@ -303,6 +303,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Order.Controllers.OrderController">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Order.Controllers.PayController">
             <summary>
             建行聚合支付类

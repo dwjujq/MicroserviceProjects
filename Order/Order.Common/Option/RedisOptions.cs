@@ -7,6 +7,12 @@ namespace Order.Common.Option;
 /// </summary>
 public sealed class RedisOptions : IConfigurableOptions
 {
+
+    public RedisOptions()
+    {
+
+    }
+
     /// <summary>
     /// 是否启用
     /// </summary>

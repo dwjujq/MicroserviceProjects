@@ -621,6 +621,11 @@
             用户ID
             </summary>
         </member>
+        <member name="T:Order.Model.Models.Order">
+            <summary>
+            订单
+            </summary>
+        </member>
         <member name="T:Order.Model.Models.PasswordLib">
             <summary>
             密码库表

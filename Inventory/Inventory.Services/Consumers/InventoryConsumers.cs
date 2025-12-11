@@ -1,18 +1,23 @@
 ﻿using DotNetCore.CAP;
+using Inventory.IRepository.Base;
 using Inventory.IServices.Consumers;
 using Inventory.Model.ViewModels;
 using Inventory.Services.BASE;
 using JCZY.CAP.Message;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
 namespace Inventory.Services.Consumers
 {
     public class InventoryConsumers : BaseServices<Model.Models.Inventory>, IInventoryConsumers,ICapSubscribe
     {
+        private readonly IServiceProvider _serviceProvider;
         private readonly IMessageTracker _messageTracker;
 
-        public InventoryConsumers(IMessageTracker messageTracker)
+        public InventoryConsumers(IServiceProvider serviceProvider,IMessageTracker messageTracker)
         {
+            _serviceProvider = serviceProvider;
+            BaseDal = _serviceProvider.GetRequiredService<IBaseRepository<Model.Models.Inventory>>();
             _messageTracker = messageTracker;
         }
 
@@ -25,7 +30,7 @@ namespace Inventory.Services.Consumers
                 return new MessageData<InventoryDeductResult>(new InventoryDeductResult());
 
             // （扣减库存）
-            var inventories = await BaseDal.Query(i => i.ProductId == orderDto.ProductId);
+            var inventories = await base.Query(i => i.ProductId == orderDto.ProductId);
             var inventory = inventories.FirstOrDefault();
 
             if (inventory.Stock < orderDto.Quantity)
@@ -35,7 +40,7 @@ namespace Inventory.Services.Consumers
 
             inventory.Stock -= orderDto.Quantity;
 
-            await BaseDal.Update(inventory);
+            await base.Update(inventory);
 
             _messageTracker.MarkAsProcessed(messageData.Id);
 

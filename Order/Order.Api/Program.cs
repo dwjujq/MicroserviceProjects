@@ -26,6 +26,9 @@ using Serilog;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Text;
+using Order.IServices.Consumers;
+using Order.Services.Consumers;
+using JCZY.CAP.Message;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,6 +84,8 @@ builder.Services.AddRedisInitMqSetup();
 builder.Services.AddIpPolicyRateLimitSetup(builder.Configuration);
 builder.Services.AddSignalR().AddNewtonsoftJsonProtocol();
 
+builder.Services.AddCapSetup();
+
 builder.Services.AddAuthorizationSetup();
 if (Permissions.IsUseIds4 || Permissions.IsUseAuthing)
 {
@@ -93,6 +98,10 @@ else
 }
 
 builder.Services.AddScoped<UseServiceDIAttribute>();
+
+builder.Services.AddScoped<IMessageTracker, RedisMessageTracker>();
+builder.Services.AddTransient<IOrderConsumers, OrderConsumers>();
+
 builder.Services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true)
     .Configure<IISServerOptions>(x => x.AllowSynchronousIO = true);
 

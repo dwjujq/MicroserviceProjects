@@ -172,6 +172,11 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
+        <member name="T:Inventory.Controllers.InventoryController">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Inventory.Controllers.LoginController">
             <summary>
             登录管理【无权限】

@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Inventory;
 
-namespace Blog.Core.Extensions.ServiceExtensions;
+namespace Inventory.Extensions.ServiceExtensions;
 
 public static class CapSetup
 {
@@ -26,6 +26,8 @@ public static class CapSetup
 
         services.AddCap(x =>
         {
+            //Thread.Sleep(30000);
+
             //使用RabbitMQ传输
             x.UseRabbitMQ(opt => {
                 opt.HostName = AppSettings.app(new string[] { "RabbitMQ", "Connection" });

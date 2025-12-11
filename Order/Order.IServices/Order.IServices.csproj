@@ -2,6 +2,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\JCZY.CAP\JCZY.CAP.csproj" />
     <ProjectReference Include="..\Order.Common\Order.Common.csproj" />
     <ProjectReference Include="..\Order.Model\Order.Model.csproj" />
   </ItemGroup>
