@@ -1,10 +1,11 @@
-﻿using Inventory.Common;
-using Inventory.Common.DB;
-using DotNetCore.CAP;
+﻿using DotNetCore.CAP;
 using DotNetCore.CAP.Messages;
+using Inventory;
+using Inventory.Common;
+using Inventory.Common.DB;
+using JCZY.CAP;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Inventory;
 
 namespace Inventory.Extensions.ServiceExtensions;
 
@@ -16,6 +17,8 @@ public static class CapSetup
     /// <param name="services"></param>
     public static void AddCapSetup(this IServiceCollection services, Action<CapOptions> configure = null)
     {
+        return;
+
         var logger = ServiceProviderServiceExtensions.GetRequiredService<ILogger<CapOptions>>(services.BuildServiceProvider());
 
         var rabbitMQEnabled = AppSettings.app(new string[] { "RabbitMQ", "Enabled" }).ObjToBool();
@@ -61,6 +64,6 @@ public static class CapSetup
             };
 
             configure?.Invoke(x);
-        });
+        }).AddSubscribeFilter<CapFilter>(); ;
     }
 }

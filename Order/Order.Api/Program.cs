@@ -3,7 +3,18 @@
 
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using JCZY.CAP.Message;
+using Microsoft.AspNetCore.Connections;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.IdentityModel.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using Order;
+using Order.Api.GrpcServices;
 using Order.Common;
 using Order.Common.Core;
 using Order.Common.Helper;
@@ -13,22 +24,13 @@ using Order.Extensions.Middlewares;
 using Order.Extensions.ServiceExtensions;
 using Order.Filter;
 using Order.Hubs;
+using Order.IServices.Consumers;
 using Order.Serilog.Utility;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.IdentityModel.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
+using Order.Services.Consumers;
 using Serilog;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Text;
-using Order.IServices.Consumers;
-using Order.Services.Consumers;
-using JCZY.CAP.Message;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +51,17 @@ builder.Host
         config.AddConfigurationApollo("appsettings.apollo.json");
     });
 builder.ConfigureApplication();
+
+//builder.WebHost.ConfigureKestrel(options =>
+//{
+//    options.ListenAnyIP(9291, listenOptions =>
+//    {
+//        listenOptions.Protocols = HttpProtocols.Http2;
+//        //listenOptions.Use()
+//    });
+//});
+
+builder.Services.AddGrpc();
 
 // 2、配置服务
 builder.Services.AddSingleton(new AppSettings(builder.Configuration));
@@ -191,6 +204,8 @@ if (builder.Configuration.GetValue<bool>("AppSettings:UseLoadTest"))
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiniProfilerMiddleware();
+
+app.MapGrpcService<GreeterService>();
 
 app.MapControllers();
 app.MapHub<ChatHub>("/api2/chatHub");

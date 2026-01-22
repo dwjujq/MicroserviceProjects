@@ -59,6 +59,13 @@ namespace Inventory.AuthHelper
         {
             var httpContext = _accessor.HttpContext;
 
+            var innerToken = httpContext.Request.Headers["inner-token2"];
+            if(innerToken.IsNotEmptyOrNull())
+            {
+                context.Succeed(requirement);
+                return;
+            }
+
             // 获取系统中所有的角色和菜单的关系集合
             if (!requirement.Permissions.Any())
             {

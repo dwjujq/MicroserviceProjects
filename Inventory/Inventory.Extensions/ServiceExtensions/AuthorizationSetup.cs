@@ -1,6 +1,7 @@
 ﻿using Inventory.AuthHelper;
 using Inventory.Common;
 using Inventory.Common.AppConfig;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +32,11 @@ namespace Inventory.Extensions
             // 然后这么写 [Authorize(Policy = "Admin")]
             services.AddAuthorization(options =>
             {
+                //options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                //.RequireAuthenticatedUser()
+                //.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme, "Inner")
+                //.Build();
+
                 options.AddPolicy("Client", policy => policy.RequireRole("Client").Build());
                 options.AddPolicy("Admin", policy => policy.RequireRole("Admin").Build());
                 options.AddPolicy("SystemOrAdmin", policy => policy.RequireRole("Admin", "System"));
